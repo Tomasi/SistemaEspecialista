@@ -1,0 +1,63 @@
+diagnostico(T, FC, FR, PA, SaO2, D, Id, Co) :-
+sintomas_leves(T, FC, FR, PA, SaO2, D, Id, Co) ;
+sintomas_medios(T, FC, FR, Id, Co) ;
+sintomas_graves(T, FC, FR, PA, SaO2, D, Id, Co).
+
+% Sintomas leves
+
+sintomas_leves(T, FC, FR, PA, SaO2, D, Id, Co) :-
+temperatura_leve(T),
+frequencia_cardiaca_leve(FC),
+frequencia_respiratoria_leve(FR),
+pa_sistolica_leve(PA),
+saO2_leve(SaO2),
+dispneia_leve(D),
+idade_leve(Id),
+comorbidades_leve(Co),
+write('Leve/Médio e deve ficar em casa, em observação por 14 dias.').
+
+temperatura_leve(T) :- T > 34, T < 38.
+frequencia_cardiaca_leve(FR) :- FR < 100.
+frequencia_respiratoria_leve(FC) :- FC < 18.
+pa_sistolica_leve(PA) :- PA > 100.
+saO2_leve(SaO2) :- SaO2 > 94.
+dispneia_leve(D) :- D = 'Não'.
+idade_leve(Id) :- Id < 60.
+comorbidades_leve(Co) :- Co = 0.
+
+% Sintomas médios
+
+sintomas_medios(T,FC,FR,Id,Co) :-
+temperatura_media(T),
+frequencia_cardiaca_media(FC),
+frequencia_respiratoria_media(FR),
+idade_media(Id),
+comorbidades_media(Co),
+write('Leve/Médio e deve ficar em casa, em observação por 14 dias.').
+
+temperatura_media(T) :- (T < 35) ;(T > 36 , T < 40).
+frequencia_cardiaca_media(FC) :- FC > 100.
+frequencia_respiratoria_media(FR) :- (FR > 18 , FR < 31).
+idade_media(Id) :- (Id > 59 , Id < 80).
+comorbidades_media(Co) :- Co = 1.
+
+% Sintomas graves
+
+sintomas_graves(T,FR,PA,SaO2,D,Id,Co) :-
+temperatura_grave(T),
+frequencia_respiratoria_grave(FR),
+pa_sistolica_grave(PA),
+saO2_grave(SaO2),
+dispneia_grave(D),
+idade_grave(Id),
+comorbidades_grave(Co),
+write('Grave e deve ser encaminhado para o hospital.').
+
+temperatura_grave(T) :- T > 39.
+frequencia_respiratoria_grave(FR) :- FR > 30.
+pa_sistolica_grave(PA) :- (PA > 89 , PA < 101) ; (PA < 90).
+saO2_grave(SaO2) :- SaO2 < 95.
+dispneia_grave(D) :- D = 'Sim'.
+idade_grave(Id) :- Id > 80.
+comorbidades_grave(Co) :- (Co = 2) ; (Co > 2).
+
